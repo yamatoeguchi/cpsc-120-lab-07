@@ -1,3 +1,13 @@
+// Yamato Eguchi
+// CPSC 120-01
+// 2021-03-25
+// yamatoe1227@csu.fullerton.edu
+// @yamatoeguchi
+//
+// Lab 07-01
+//
+// This is my find min element assignment
+//
 
 #include <algorithm>
 #include <cstdlib>
@@ -111,6 +121,7 @@ void ErrorMessage(const string& message) {
 void PrintVector(const vector<int>& the_vector) {
   // TODO: print out each element in the vector using an
   // ostream_iterator and copy
+  copy(the_vector.begin(), the_vector.end(), ostream_iterator<int>(cout, "\n"));
 }
 
 /// FillVector filles \p the_vector with \p nelements random numbers given by
@@ -158,8 +169,15 @@ void FillVector(vector<int>& the_vector, const int nelements,
 int FindMinimum(vector<int>& the_vector) {
   // TODO: return the minimum value of the vector using min_element() and
   // distance()
-
-  return -42;
+  int min = -42;
+  vector<int>::iterator result = min_element(the_vector.begin(), the_vector.end());
+  int location = distance(the_vector.begin(), result);
+  try {
+    min = the_vector.at(location);
+  } catch (const exception& e) {
+    ErrorMessage("Can't find a min value!");
+  }
+  return min;
 }
 
 /// Entry point to the find_min_element program
