@@ -110,6 +110,7 @@ void ErrorMessage(const string& message) {
 /// the main function.
 void PrintVector(const vector<int>& the_vector) {
   // TODO: print out each element in the vector using an ostream_iterator
+  copy(the_vector.begin(), the_vector.end(), ostream_iterator<int>(cout, "\n"));
 }
 
 /// FillVector filles \p the_vector with \p nelements random numbers given by
@@ -132,7 +133,10 @@ void FillVector(vector<int>& the_vector, const int nelements,
                 RandomNumberGenerator& random_number_generator) {
   // TODO: assign a random number to each location in the vector using
   // generate() from the C++ standard library.
-
+  generate(the_vector.begin(), the_vector.end(),
+  [&random_number_generator](){
+                    return random_number_generator.next();
+          });
 }
 
 /// FindMaximum walks through each location of \p the_vector, finds the
@@ -154,7 +158,15 @@ void FillVector(vector<int>& the_vector, const int nelements,
 int FindMaximum(vector<int>& the_vector) {
   // TODO: return the maximum value of the vector using max_element() and
   // distance()
-  return -42;
+  int max = -42;
+  vector<int>::iterator result = max_element(the_vector.begin(), the_vector.end());
+  int location = distance(the_vector.begin(), result);
+  try {
+    max = the_vector.at(location);
+  } catch (const exception& e) {
+    ErrorMessage("Can't find a min value!");
+  }
+  return max;
 }
 
 /// Entry point to the find_max_element program
