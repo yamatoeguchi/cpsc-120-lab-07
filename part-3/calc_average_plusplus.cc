@@ -1,3 +1,13 @@
+// Yamato Eguchi
+// CPSC 120-01
+// 2021-03-25
+// yamatoe1227@csu.fullerton.edu
+// @yamatoeguchi
+//
+// Lab 07-03
+//
+// This is my calc average plus plus assignment
+//
 
 #include <algorithm>
 #include <vector>
@@ -110,6 +120,7 @@ void ErrorMessage(const string& message) {
 /// the main function.
 void PrintVector(const vector<int>& the_vector) {
   // TODO: print out each element in the vector using an ostream_iterator
+  copy(the_vector.begin(), the_vector.end(), ostream_iterator<int>(cout, "\n"));
 }
 
 /// FillVector filles \p the_vector with \p nelements random numbers given by
@@ -132,7 +143,10 @@ void FillVector(vector<int>& the_vector, const int nelements,
                 RandomNumberGenerator& random_number_generator) {
   // TODO: assign a random number to each location in the vector using
   // generate() from the C++ standard library.
-
+  generate(the_vector.begin(), the_vector.end(),
+  [&random_number_generator](){
+                    return random_number_generator.next();
+          });
 }
 
 /// CalculateAverage calculates the average (arithmetic mean) of all the
@@ -154,7 +168,10 @@ void FillVector(vector<int>& the_vector, const int nelements,
 ///
 /// \returns The average (arithmetic mean) value in the vector as a float
 float CalculateAverage(const vector<int>& the_vector) {
-  return -42.0
+  int size = the_vector.size();
+  int sum = accumulate(the_vector.begin(), the_vector.end(), 0);
+  float average = float(sum) / float(size);
+  return average;
 }
 
 /// Entry point to the calc_average_plusplus program
